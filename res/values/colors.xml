@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+	   
+	<resources>
+	  <color name="button_focused_color_start">#7FA40E</color>   <!-- Зелёный -->
+	  <color name="button_focused_color_end">#79C83F</color>     <!-- Светло-зелёный -->
+	  <color name="button_normal_color_start">#1f71df</color>    <!-- Синий -->
+	  <color name="button_normal_color_end">#619be9</color>      <!-- Светло-синий -->
+	  <color name="button_pressed_color_start">#7FA40E</color>   <!-- Зелёный -->
+	  <color name="button_pressed_color_end">#79C83F</color>     <!-- Светло-зелёный -->
+	  <color name="White">#FFFFFF</color> 					     <!-- Белый -->	
+	  <color name="Gold">#FFD700</color> 					     <!-- Золотой -->
+	  <color name="tvExplanationColor">#AA3996E7</color> 	     <!-- Синий, для TextView пояснения результата -->
+	  <color name="FragmentSettingsBackground">#000000</color>	 <!-- Чёрный фон FragmentSettings -->
+	</resources><!-- 770080FF -->

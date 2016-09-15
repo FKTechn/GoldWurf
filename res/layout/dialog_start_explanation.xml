@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_start_explanation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+	<TableRow
+	    android:id="@+id/tableRow1_FISM"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="5dp"
+	    android:layout_weight="1" >
+
+	    <TextView
+	        android:id="@+id/textView_FISM"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="12sp"
+	        android:typeface="monospace" />
+
+    </TableRow>
+
+</TableLayout>
