@@ -1,12 +1,5 @@
 package com.gold.wurf;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -43,11 +36,11 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements TabListener{
 
-// Логгирование внутри IDE
+// Р›РѕРіРіРёСЂРѕРІР°РЅРёРµ РІРЅСѓС‚СЂРё IDE
 private static final String LOG_TAG = "FlankLOGS";
-// Фрагменты "Домой" (главная страница), "Топ-10", "О вурфе" и "Настройки"
+// Р¤СЂР°РіРјРµРЅС‚С‹ "Р”РѕРјРѕР№" (РіР»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р°), "РўРѕРї-10", "Рћ РІСѓСЂС„Рµ" Рё "РќР°СЃС‚СЂРѕР№РєРё"
 Fragment frag_main, frag_top10, frag_about, frag_settings;
-// Всплывающее окошко с подсказкой, чем являются 4 выпадающих списка (ФИСМ)
+// Р’СЃРїР»С‹РІР°СЋС‰РµРµ РѕРєРѕС€РєРѕ СЃ РїРѕРґСЃРєР°Р·РєРѕР№, С‡РµРј СЏРІР»СЏСЋС‚СЃСЏ 4 РІС‹РїР°РґР°СЋС‰РёС… СЃРїРёСЃРєР° (Р¤РРЎРњ)
 PopupWindow PopupStartExplanation;
 
 	@Override
@@ -55,84 +48,84 @@ PopupWindow PopupStartExplanation;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Log.d(LOG_TAG, "[ЗОЛОТОЙ ВУРФ СТАРТОВАЛ]");
+		Log.d(LOG_TAG, "[Р—РћР›РћРўРћР™ Р’РЈР Р¤ РЎРўРђР РўРћР’РђР›]");
 
-		// Навигационная панель
+		// РќР°РІРёРіР°С†РёРѕРЅРЅР°СЏ РїР°РЅРµР»СЊ
 		android.support.v7.app.ActionBar navbar = getSupportActionBar();
 		navbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		/* 1-я панелька "Домой" */
+		/* 1-СЏ РїР°РЅРµР»СЊРєР° "Р”РѕРјРѕР№" */
 		Tab tab = navbar.newTab();
 		tab.setIcon(R.drawable.ic_home);
 		tab.setTabListener(this);
 		navbar.addTab(tab);
-		/* 2-я панелька */
-		/* Попытка установить custom layout - вверху картинка, внизу текст
+		/* 2-СЏ РїР°РЅРµР»СЊРєР° */
+		/* РџРѕРїС‹С‚РєР° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ custom layout - РІРІРµСЂС…Сѓ РєР°СЂС‚РёРЅРєР°, РІРЅРёР·Сѓ С‚РµРєСЃС‚
 		View tabView = this.getLayoutInflater().inflate(R.layout.navbar_layout, null);
 		TextView tabText = (TextView) tabView.findViewById(R.id.tabText);
 		tabText.setText(R.string.calculate_wurf1);
 		ImageView tabImage = (ImageView) tabView.findViewById(R.id.tabIcon);
 		tabImage.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_top10));*/
 		tab = navbar.newTab();
-		//tab.setText("Топ-10");
+		//tab.setText("РўРѕРї-10");
 		tab.setIcon(R.drawable.ic_top10);
 		tab.setTabListener(this);
 		navbar.addTab(tab);
-		/* 3-я панелька */
+		/* 3-СЏ РїР°РЅРµР»СЊРєР° */
 		tab = navbar.newTab();
-		//tab.setText("Настройки");
+		//tab.setText("РќР°СЃС‚СЂРѕР№РєРё");
 		tab.setIcon(R.drawable.ic_settings);
 		tab.setTabListener(this);
 		navbar.addTab(tab);
-		/* 4-я панелька */
+		/* 4-СЏ РїР°РЅРµР»СЊРєР° */
 		tab = navbar.newTab();
-		//tab.setText("О вурфе");
+		//tab.setText("Рћ РІСѓСЂС„Рµ");
 		tab.setIcon(R.drawable.ic_about);
 		tab.setTabListener(this);
 		navbar.addTab(tab);
-		Log.d(LOG_TAG, "Табы созданы");
+		Log.d(LOG_TAG, "РўР°Р±С‹ СЃРѕР·РґР°РЅС‹");
 
-		// Если активити была пересоздана (поменяли ориентацию), выбираем отмеченный ранее таб ActionBar
+		// Р•СЃР»Рё Р°РєС‚РёРІРёС‚Рё Р±С‹Р»Р° РїРµСЂРµСЃРѕР·РґР°РЅР° (РїРѕРјРµРЅСЏР»Рё РѕСЂРёРµРЅС‚Р°С†РёСЋ), РІС‹Р±РёСЂР°РµРј РѕС‚РјРµС‡РµРЅРЅС‹Р№ СЂР°РЅРµРµ С‚Р°Р± ActionBar
         if(savedInstanceState != null) 
         {
             int index = savedInstanceState.getInt("TabIndex");
             getSupportActionBar().setSelectedNavigationItem(index);
         }
 
-    	// Статус галки настроек "Хранить ТОП-10" берётся из своего предыдущего состояния (отмечена/не отмечена)
+    	// РЎС‚Р°С‚СѓСЃ РіР°Р»РєРё РЅР°СЃС‚СЂРѕРµРє "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10" Р±РµСЂС‘С‚СЃСЏ РёР· СЃРІРѕРµРіРѕ РїСЂРµРґС‹РґСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ (РѕС‚РјРµС‡РµРЅР°/РЅРµ РѕС‚РјРµС‡РµРЅР°)
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
 
-		/* Показываем попап-окно с разъяснением, что означают выпадающие списки */
+		/* РџРѕРєР°Р·С‹РІР°РµРј РїРѕРїР°Рї-РѕРєРЅРѕ СЃ СЂР°Р·СЉСЏСЃРЅРµРЅРёРµРј, С‡С‚Рѕ РѕР·РЅР°С‡Р°СЋС‚ РІС‹РїР°РґР°СЋС‰РёРµ СЃРїРёСЃРєРё */
 		ShowStartExplanatonDialog();
 	}
 
-	/* Метод отображает попап-окно с разъяснением, что означают выпадающие списки (4 картинки ФИСМ) */
+	/* РњРµС‚РѕРґ РѕС‚РѕР±СЂР°Р¶Р°РµС‚ РїРѕРїР°Рї-РѕРєРЅРѕ СЃ СЂР°Р·СЉСЏСЃРЅРµРЅРёРµРј, С‡С‚Рѕ РѕР·РЅР°С‡Р°СЋС‚ РІС‹РїР°РґР°СЋС‰РёРµ СЃРїРёСЃРєРё (4 РєР°СЂС‚РёРЅРєРё Р¤РРЎРњ) */
 	public void ShowStartExplanatonDialog()
 	{
-		// Находим попап-окно
+		// РќР°С…РѕРґРёРј РїРѕРїР°Рї-РѕРєРЅРѕ
 	    TableLayout viewGroup = (TableLayout) this.findViewById(R.id.popup_start_explanation);
 	    final LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View layout = layoutInflater.inflate(R.layout.popup_start_explanation, viewGroup);
-	    // Создаём его
+	    // РЎРѕР·РґР°С‘Рј РµРіРѕ
 	    PopupStartExplanation = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	    PopupStartExplanation.setContentView(layout);
-	    // Обрабатываем ширину поясняющего попап-окна PopupStartExplanation
-	    // На маленьких экранах оно отображается некрасиво, поэтому задаём его размеры вручную только на больших экранах,
-	    // в остальных случаях предоставляем масштабирование самому андроиду.
-	    // Размер самой фоновой картинки start_explanation_background.png 465x445
+	    // РћР±СЂР°Р±Р°С‚С‹РІР°РµРј С€РёСЂРёРЅСѓ РїРѕСЏСЃРЅСЏСЋС‰РµРіРѕ РїРѕРїР°Рї-РѕРєРЅР° PopupStartExplanation
+	    // РќР° РјР°Р»РµРЅСЊРєРёС… СЌРєСЂР°РЅР°С… РѕРЅРѕ РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ РЅРµРєСЂР°СЃРёРІРѕ, РїРѕСЌС‚РѕРјСѓ Р·Р°РґР°С‘Рј РµРіРѕ СЂР°Р·РјРµСЂС‹ РІСЂСѓС‡РЅСѓСЋ С‚РѕР»СЊРєРѕ РЅР° Р±РѕР»СЊС€РёС… СЌРєСЂР°РЅР°С…,
+	    // РІ РѕСЃС‚Р°Р»СЊРЅС‹С… СЃР»СѓС‡Р°СЏС… РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµРј РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ СЃР°РјРѕРјСѓ Р°РЅРґСЂРѕРёРґСѓ.
+	    // Р Р°Р·РјРµСЂ СЃР°РјРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРё start_explanation_background.png 465x445
 	    //
-	    // Получаем параметры экрана
+	    // РџРѕР»СѓС‡Р°РµРј РїР°СЂР°РјРµС‚СЂС‹ СЌРєСЂР°РЅР°
 		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-		// Ширина и высота экрана
+		// РЁРёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° СЌРєСЂР°РЅР°
 		int screenWidthInPix  = displayMetrics.widthPixels;
 		int screenHeightInPix = displayMetrics.heightPixels;
-		// Если экран большой, выводим окно в полном размере (иначе андроид сам масштабирует)
+		// Р•СЃР»Рё СЌРєСЂР°РЅ Р±РѕР»СЊС€РѕР№, РІС‹РІРѕРґРёРј РѕРєРЅРѕ РІ РїРѕР»РЅРѕРј СЂР°Р·РјРµСЂРµ (РёРЅР°С‡Рµ Р°РЅРґСЂРѕРёРґ СЃР°Рј РјР°СЃС€С‚Р°Р±РёСЂСѓРµС‚)
 		if ((screenWidthInPix >= 465) && (screenHeightInPix >= 445))
 			{
 			    PopupStartExplanation.setWidth(465);
 			    PopupStartExplanation.setHeight(445);
 			}
-	    // Отображаем попап-окно в новом потоке через интерфейс Runnable(), 
-		// т.к. в текущем потоке MainActivity ещё не до конца загрузилась
+	    // РћС‚РѕР±СЂР°Р¶Р°РµРј РїРѕРїР°Рї-РѕРєРЅРѕ РІ РЅРѕРІРѕРј РїРѕС‚РѕРєРµ С‡РµСЂРµР· РёРЅС‚РµСЂС„РµР№СЃ Runnable(), 
+		// С‚.Рє. РІ С‚РµРєСѓС‰РµРј РїРѕС‚РѕРєРµ MainActivity РµС‰С‘ РЅРµ РґРѕ РєРѕРЅС†Р° Р·Р°РіСЂСѓР·РёР»Р°СЃСЊ
 	    findViewById(R.id.FragmentContainer).post(new Runnable() {
 		public void run() {
 			    PopupStartExplanation.setFocusable(true);
@@ -151,31 +144,31 @@ PopupWindow PopupStartExplanation;
 
 			    PopupStartExplanation.showAtLocation(findViewById(R.id.FragmentContainer), Gravity.CENTER_VERTICAL, 0, 100);
 
-			    // Находим 4 картинки ФИСМ в поясняющем попап-окне
+			    // РќР°С…РѕРґРёРј 4 РєР°СЂС‚РёРЅРєРё Р¤РРЎРњ РІ РїРѕСЏСЃРЅСЏСЋС‰РµРј РїРѕРїР°Рї-РѕРєРЅРµ
 			    ImageView ivPhysiology = (ImageView)PopupStartExplanation.getContentView().findViewById(R.id.imageView_physiology);
 			    ImageView ivIntellect = (ImageView)PopupStartExplanation.getContentView().findViewById(R.id.imageView_intellect);
 			    ImageView ivSocium = (ImageView)PopupStartExplanation.getContentView().findViewById(R.id.imageView_socium);
 			    ImageView ivMaterial = (ImageView)PopupStartExplanation.getContentView().findViewById(R.id.imageView_material);
-			    // Поясняющий диалог ExplainDialog, который выводится по клику на одну из 4 картинок (ФИСМ) попап-окна
-			    // Ф
+			    // РџРѕСЏСЃРЅСЏСЋС‰РёР№ РґРёР°Р»РѕРі ExplainDialog, РєРѕС‚РѕСЂС‹Р№ РІС‹РІРѕРґРёС‚СЃСЏ РїРѕ РєР»РёРєСѓ РЅР° РѕРґРЅСѓ РёР· 4 РєР°СЂС‚РёРЅРѕРє (Р¤РРЎРњ) РїРѕРїР°Рї-РѕРєРЅР°
+			    // Р¤
 			    ivPhysiology.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						ShowExplanationDialog("PHYS");
 					}});
-			    // И
+			    // Р
 			    ivIntellect.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						ShowExplanationDialog("INT");
 					}});
-			    // С
+			    // РЎ
 			    ivSocium.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						ShowExplanationDialog("SOC");
 					}});
-			    // М
+			    // Рњ
 			    ivMaterial.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -185,63 +178,63 @@ PopupWindow PopupStartExplanation;
 		});
 	}
 
-	/* Метод выводит на экран поясняющий диалог по одному из 4 критериев (ФИСМ)
-	 * @param s - критерий "PHYS", "INT", "SOC" или "MAT"
-	 * @ExplainDialog - поясняющий диалог
+	/* РњРµС‚РѕРґ РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ РїРѕСЏСЃРЅСЏСЋС‰РёР№ РґРёР°Р»РѕРі РїРѕ РѕРґРЅРѕРјСѓ РёР· 4 РєСЂРёС‚РµСЂРёРµРІ (Р¤РРЎРњ)
+	 * @param s - РєСЂРёС‚РµСЂРёР№ "PHYS", "INT", "SOC" РёР»Рё "MAT"
+	 * @ExplainDialog - РїРѕСЏСЃРЅСЏСЋС‰РёР№ РґРёР°Р»РѕРі
 	 * */
 	public void ShowExplanationDialog(String s) {
-		// Если андроид 2.xx, то он криво передаёт цвета диалогового окошка - слабый серый текст на чёрном фоне.
-		// Исправляем выставлением другой темы
+		// Р•СЃР»Рё Р°РЅРґСЂРѕРёРґ 2.xx, С‚Рѕ РѕРЅ РєСЂРёРІРѕ РїРµСЂРµРґР°С‘С‚ С†РІРµС‚Р° РґРёР°Р»РѕРіРѕРІРѕРіРѕ РѕРєРѕС€РєР° - СЃР»Р°Р±С‹Р№ СЃРµСЂС‹Р№ С‚РµРєСЃС‚ РЅР° С‡С‘СЂРЅРѕРј С„РѕРЅРµ.
+		// РСЃРїСЂР°РІР»СЏРµРј РІС‹СЃС‚Р°РІР»РµРЅРёРµРј РґСЂСѓРіРѕР№ С‚РµРјС‹
 		if(android.os.Build.VERSION.RELEASE.startsWith("2")) {setTheme(R.style.Translucent);}
 		//
 		DialogFragment ExplainDialog = StartExplanationDialog.newInstance(s);
 		ExplainDialog.show(getSupportFragmentManager(), "ExplainDialog");
 	}
 
-	// Добавляем пункты меню (меню показывается по нажатию на аппаратную кнопку меню)
+	// Р”РѕР±Р°РІР»СЏРµРј РїСѓРЅРєС‚С‹ РјРµРЅСЋ (РјРµРЅСЋ РїРѕРєР°Р·С‹РІР°РµС‚СЃСЏ РїРѕ РЅР°Р¶Р°С‚РёСЋ РЅР° Р°РїРїР°СЂР°С‚РЅСѓСЋ РєРЅРѕРїРєСѓ РјРµРЅСЋ)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//getMenuInflater().inflate(R.menu.main, menu);
 		/* menu.add(groupId, itemId, order, title); */
-		menu.add(0, 1, 0, "Домой");
-		menu.add(0, 2, 0, "ТОП-10 вурфов");
-		menu.add(0, 3, 0, "Настройки");
-		menu.add(0, 4, 0, "О вурфе");
-		menu.add(0, 5, 0, "Поделиться");
-		menu.add(0, 6, 0, "Выход");
+		menu.add(0, 1, 0, "Р”РѕРјРѕР№");
+		menu.add(0, 2, 0, "РўРћРџ-10 РІСѓСЂС„РѕРІ");
+		menu.add(0, 3, 0, "РќР°СЃС‚СЂРѕР№РєРё");
+		menu.add(0, 4, 0, "Рћ РІСѓСЂС„Рµ");
+		menu.add(0, 5, 0, "РџРѕРґРµР»РёС‚СЊСЃСЏ");
+		menu.add(0, 6, 0, "Р’С‹С…РѕРґ");
 		//menu.getItem(1).getActionView().setBackgroundResource(R.color.Gold);
 
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	// Обработчик пунктов меню (НЕ ActionBar)
+	// РћР±СЂР°Р±РѕС‚С‡РёРє РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ (РќР• ActionBar)
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		//Toast.makeText(this, Integer.toString(item.getItemId()), Toast.LENGTH_SHORT).show();
 		switch (item.getItemId())
 		{
 			case 1:
-				// ДОМОЙ
+				// Р”РћРњРћР™
 				getSupportActionBar().setSelectedNavigationItem(0);
 				return true;
 			case 2:
-				// ТОП-10
+				// РўРћРџ-10
 				getSupportActionBar().setSelectedNavigationItem(1);
 				return true;
 			case 3:
-				// НАСТРОЙКИ
+				// РќРђРЎРўР РћР™РљР
 				getSupportActionBar().setSelectedNavigationItem(2);
 				return true;
 			case 4:
-				// О ВУРФЕ
+				// Рћ Р’РЈР Р¤Р•
 				getSupportActionBar().setSelectedNavigationItem(3);
-				/* Показываем попап-окно с разъяснением, что означают выпадающие списки */
+				/* РџРѕРєР°Р·С‹РІР°РµРј РїРѕРїР°Рї-РѕРєРЅРѕ СЃ СЂР°Р·СЉСЏСЃРЅРµРЅРёРµРј, С‡С‚Рѕ РѕР·РЅР°С‡Р°СЋС‚ РІС‹РїР°РґР°СЋС‰РёРµ СЃРїРёСЃРєРё */
 				ShowStartExplanatonDialog();
 				return true;
 			case 5:
-				// ПОДЕЛИТЬСЯ. Вызываем стандартный диалог со всеми подключенными share провайдерами
+				// РџРћР”Р•Р›РРўР¬РЎРЇ. Р’С‹Р·С‹РІР°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РґРёР°Р»РѕРі СЃРѕ РІСЃРµРјРё РїРѕРґРєР»СЋС‡РµРЅРЅС‹РјРё share РїСЂРѕРІР°Р№РґРµСЂР°РјРё
 				TextView tvWurfResult = (TextView) findViewById(R.id.textView_WURF_Value);
-				// Если поле с рассчитанным вурфом пустое, значит, вурф ещё не рассчитали. Выводим предупреждающий диалог
+				// Р•СЃР»Рё РїРѕР»Рµ СЃ СЂР°СЃСЃС‡РёС‚Р°РЅРЅС‹Рј РІСѓСЂС„РѕРј РїСѓСЃС‚РѕРµ, Р·РЅР°С‡РёС‚, РІСѓСЂС„ РµС‰С‘ РЅРµ СЂР°СЃСЃС‡РёС‚Р°Р»Рё. Р’С‹РІРѕРґРёРј РїСЂРµРґСѓРїСЂРµР¶РґР°СЋС‰РёР№ РґРёР°Р»РѕРі
 				if (tvWurfResult.getText().toString().equals(""))
 				{
 					Dialog CalculateWurfDialog;
@@ -251,24 +244,24 @@ PopupWindow PopupStartExplanation;
 					adb.setNeutralButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// По нажатию на кнопку "ОК" закрываем диалог
+							// РџРѕ РЅР°Р¶Р°С‚РёСЋ РЅР° РєРЅРѕРїРєСѓ "РћРљ" Р·Р°РєСЂС‹РІР°РµРј РґРёР°Р»РѕРі
 							dialog.dismiss();
 						}});
 					CalculateWurfDialog = adb.create();
 					CalculateWurfDialog.show();
 				}
-				// Если поле с рассчитанным вурфом заполнено, вызываем стандартный диалог со всеми подключенными share провайдерами
+				// Р•СЃР»Рё РїРѕР»Рµ СЃ СЂР°СЃСЃС‡РёС‚Р°РЅРЅС‹Рј РІСѓСЂС„РѕРј Р·Р°РїРѕР»РЅРµРЅРѕ, РІС‹Р·С‹РІР°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РґРёР°Р»РѕРі СЃРѕ РІСЃРµРјРё РїРѕРґРєР»СЋС‡РµРЅРЅС‹РјРё share РїСЂРѕРІР°Р№РґРµСЂР°РјРё
 				else
 				{
 					final Intent intent = new Intent(Intent.ACTION_SEND);
 					intent.setType("text/plain");
-					intent.putExtra(Intent.EXTRA_SUBJECT, "Золотой вурф");
+					intent.putExtra(Intent.EXTRA_SUBJECT, "Р—РѕР»РѕС‚РѕР№ РІСѓСЂС„");
 					intent.putExtra(Intent.EXTRA_TEXT, tvWurfResult.getText()+"\nhttp://result.zz.mu/wurf");
 					startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
 				}
 				return true;
 			case 6:
-				// ВЫХОД. Завершаем работу приложения
+				// Р’Р«РҐРћР”. Р—Р°РІРµСЂС€Р°РµРј СЂР°Р±РѕС‚Сѓ РїСЂРёР»РѕР¶РµРЅРёСЏ
 				finish();
 				return true;
 			default: return super.onOptionsItemSelected(item);
@@ -277,11 +270,11 @@ PopupWindow PopupStartExplanation;
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		//Log.d(LOG_TAG, "Выбран уже выбранный таб: " + tab.getText());
+		//Log.d(LOG_TAG, "Р’С‹Р±СЂР°РЅ СѓР¶Рµ РІС‹Р±СЂР°РЅРЅС‹Р№ С‚Р°Р±: " + tab.getText());
 	}
 
 	String CurrentFragmentTag = "fragment_main";
-	// Метод выводит переданный в параметрах фрагмент
+	// РњРµС‚РѕРґ РІС‹РІРѕРґРёС‚ РїРµСЂРµРґР°РЅРЅС‹Р№ РІ РїР°СЂР°РјРµС‚СЂР°С… С„СЂР°РіРјРµРЅС‚
 	public void LoadFragment(Fragment NewFragment, String NewFragmentTag) {
 	    FragmentManager fm = getSupportFragmentManager();
 	    Fragment currFragment  =  fm.findFragmentByTag(CurrentFragmentTag);
@@ -291,7 +284,7 @@ PopupWindow PopupStartExplanation;
 	    if(currFragment != null) {ft.hide(currFragment);}
 
 	    if(newFragment == null) {
-	    	// Создаём фрагменты впервые (затем будем просто показывать/прятать нужный фрагмент)
+	    	// РЎРѕР·РґР°С‘Рј С„СЂР°РіРјРµРЅС‚С‹ РІРїРµСЂРІС‹Рµ (Р·Р°С‚РµРј Р±СѓРґРµРј РїСЂРѕСЃС‚Рѕ РїРѕРєР°Р·С‹РІР°С‚СЊ/РїСЂСЏС‚Р°С‚СЊ РЅСѓР¶РЅС‹Р№ С„СЂР°РіРјРµРЅС‚)
 	    	if (NewFragmentTag.equals(getString(R.string.fragment_main)))  	  {newFragment  = new FragmentMain();}
 	    	else
 	    	if (NewFragmentTag.equals(getString(R.string.fragment_top10))) 	  {newFragment  = new FragmentTop10();}
@@ -299,16 +292,16 @@ PopupWindow PopupStartExplanation;
 	    	if (NewFragmentTag.equals(getString(R.string.fragment_settings))) {newFragment  = new FragmentSettings();}
 	    	else
 	    	if (NewFragmentTag.equals(getString(R.string.fragment_about))) 	  {newFragment  = new FragmentAbout();}
-	    	// Добавляем фрагент в менеджер транзакций
+	    	// Р”РѕР±Р°РІР»СЏРµРј С„СЂР°РіРµРЅС‚ РІ РјРµРЅРµРґР¶РµСЂ С‚СЂР°РЅР·Р°РєС†РёР№
 	        ft.add(R.id.FragmentContainer, newFragment, NewFragmentTag);
 	    } else {
-	        // Фрагмент ТОП-10 при каждом вызове должен подгружать вурфы из файла WurfsTop10.DAT
+	        // Р¤СЂР°РіРјРµРЅС‚ РўРћРџ-10 РїСЂРё РєР°Р¶РґРѕРј РІС‹Р·РѕРІРµ РґРѕР»Р¶РµРЅ РїРѕРґРіСЂСѓР¶Р°С‚СЊ РІСѓСЂС„С‹ РёР· С„Р°Р№Р»Р° WurfsTop10.DAT
 		    if (NewFragmentTag.equals(getString(R.string.fragment_top10))) 
 		    {
 				((FragmentTop10) newFragment).LoadAndDisplayWurfs();
 		    }
-		    // Остальные фрагменты статичные, просто прячем текущий и показываем нужный
-		    // Проверка для начального запуска, когда NewFragmentTag == CurrentFragmentTag == "fragment_main"
+		    // РћСЃС‚Р°Р»СЊРЅС‹Рµ С„СЂР°РіРјРµРЅС‚С‹ СЃС‚Р°С‚РёС‡РЅС‹Рµ, РїСЂРѕСЃС‚Рѕ РїСЂСЏС‡РµРј С‚РµРєСѓС‰РёР№ Рё РїРѕРєР°Р·С‹РІР°РµРј РЅСѓР¶РЅС‹Р№
+		    // РџСЂРѕРІРµСЂРєР° РґР»СЏ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ Р·Р°РїСѓСЃРєР°, РєРѕРіРґР° NewFragmentTag == CurrentFragmentTag == "fragment_main"
 		    if (NewFragmentTag != CurrentFragmentTag)
 		    {
 			    ft.show(newFragment);
@@ -320,17 +313,17 @@ PopupWindow PopupStartExplanation;
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		// Устанавливаем светлую тему приложения (по умолчанию)
-		// Для андроида 3.xx сначала ставим другую тему, чтобы меню (по аппаратной кнопке) не выглядело неактивным
+		// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРІРµС‚Р»СѓСЋ С‚РµРјСѓ РїСЂРёР»РѕР¶РµРЅРёСЏ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ)
+		// Р”Р»СЏ Р°РЅРґСЂРѕРёРґР° 3.xx СЃРЅР°С‡Р°Р»Р° СЃС‚Р°РІРёРј РґСЂСѓРіСѓСЋ С‚РµРјСѓ, С‡С‚РѕР±С‹ РјРµРЅСЋ (РїРѕ Р°РїРїР°СЂР°С‚РЅРѕР№ РєРЅРѕРїРєРµ) РЅРµ РІС‹РіР»СЏРґРµР»Рѕ РЅРµР°РєС‚РёРІРЅС‹Рј
 		if(android.os.Build.VERSION.RELEASE.startsWith("3")) {setTheme(R.style.AppCompatLight);}
 		else
 		{
-			// Для андроида 2.xx сначала ставим другую тему (Translucent), чтобы меню (по аппаратной кнопке) не выглядело неактивным
+			// Р”Р»СЏ Р°РЅРґСЂРѕРёРґР° 2.xx СЃРЅР°С‡Р°Р»Р° СЃС‚Р°РІРёРј РґСЂСѓРіСѓСЋ С‚РµРјСѓ (Translucent), С‡С‚РѕР±С‹ РјРµРЅСЋ (РїРѕ Р°РїРїР°СЂР°С‚РЅРѕР№ РєРЅРѕРїРєРµ) РЅРµ РІС‹РіР»СЏРґРµР»Рѕ РЅРµР°РєС‚РёРІРЅС‹Рј
 			if(android.os.Build.VERSION.RELEASE.startsWith("2")) {setTheme(R.style.Translucent);}
 		}
-		// Ставим светлую тему
+		// РЎС‚Р°РІРёРј СЃРІРµС‚Р»СѓСЋ С‚РµРјСѓ
 		setTheme(R.style.AppTheme);
-		// 0,1,2,3 - загружаем соответствующие фрагменты по порядку табов в navbar
+		// 0,1,2,3 - Р·Р°РіСЂСѓР¶Р°РµРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ С„СЂР°РіРјРµРЅС‚С‹ РїРѕ РїРѕСЂСЏРґРєСѓ С‚Р°Р±РѕРІ РІ navbar
 		switch (getSupportActionBar().getSelectedNavigationIndex())
 		{
 			case 0: LoadFragment(frag_main, getString(R.string.fragment_main));
@@ -338,7 +331,7 @@ PopupWindow PopupStartExplanation;
 			case 1: LoadFragment(frag_top10, getString(R.string.fragment_top10));
 				break;
 			case 2:
-		    	// Устанавливаем светлую тему приложения
+		    	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРІРµС‚Р»СѓСЋ С‚РµРјСѓ РїСЂРёР»РѕР¶РµРЅРёСЏ
 				setTheme(R.style.AppCompatLight);
 				LoadFragment(frag_settings, getString(R.string.fragment_settings));
 				break;
@@ -351,13 +344,13 @@ PopupWindow PopupStartExplanation;
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		//Log.d(LOG_TAG, "Таб больше не выбран: " + tab.getText());
+		//Log.d(LOG_TAG, "РўР°Р± Р±РѕР»СЊС€Рµ РЅРµ РІС‹Р±СЂР°РЅ: " + tab.getText());
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 	  super.onSaveInstanceState(savedInstanceState);
-	  // Сохраняем номер выбранного таба в ActionBar
+	  // РЎРѕС…СЂР°РЅСЏРµРј РЅРѕРјРµСЂ РІС‹Р±СЂР°РЅРЅРѕРіРѕ С‚Р°Р±Р° РІ ActionBar
 	  int index = getSupportActionBar().getSelectedNavigationIndex();
 	  savedInstanceState.putInt("TabIndex", index);
 	}

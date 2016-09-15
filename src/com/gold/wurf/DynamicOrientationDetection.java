@@ -8,17 +8,17 @@ import android.widget.TableLayout;
 public class DynamicOrientationDetection extends Activity {
 
 	   /**
-	   * Меняем фоновую картинку в зависимости от ориентации.
+	   * РњРµРЅСЏРµРј С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕСЂРёРµРЅС‚Р°С†РёРё.
 	   * @param 
-	   * orientation - текущая ориентация экрана
-	   * v - текущий вид (view), с горизонтальной или вертикальной картинкой снежинки
+	   * orientation - С‚РµРєСѓС‰Р°СЏ РѕСЂРёРµРЅС‚Р°С†РёСЏ СЌРєСЂР°РЅР°
+	   * v - С‚РµРєСѓС‰РёР№ РІРёРґ (view), СЃ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅРѕР№ РёР»Рё РІРµСЂС‚РёРєР°Р»СЊРЅРѕР№ РєР°СЂС‚РёРЅРєРѕР№ СЃРЅРµР¶РёРЅРєРё
 	   * @return
-	   * v - вид с фоновой картинкой, которая соответствует ориентации 
+	   * v - РІРёРґ СЃ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№, РєРѕС‚РѕСЂР°СЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РѕСЂРёРµРЅС‚Р°С†РёРё 
 	   */
 	   public View setBackgroundImage(int orientation, String FragmentName, View v){
-		  // Находим наш вид (разметку)
+		  // РќР°С…РѕРґРёРј РЅР°С€ РІРёРґ (СЂР°Р·РјРµС‚РєСѓ)
 		  TableLayout tl = null;
-		  // Определяем, какой фрагмент вызвал данный метод setBackgroundImage
+		  // РћРїСЂРµРґРµР»СЏРµРј, РєР°РєРѕР№ С„СЂР°РіРјРµРЅС‚ РІС‹Р·РІР°Р» РґР°РЅРЅС‹Р№ РјРµС‚РѕРґ setBackgroundImage
 		  if (FragmentName.equals("FragmentMain"))
 		  {
 			  tl = (TableLayout) v.findViewById(R.id.RootMainLayout);  
@@ -28,20 +28,20 @@ public class DynamicOrientationDetection extends Activity {
 		  {
 			  tl = (TableLayout) v.findViewById(R.id.RootAboutLayout);  
 		  }
-		  // Меняем фоновую картинку со снежинкой
+		  // РњРµРЅСЏРµРј С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ СЃРѕ СЃРЅРµР¶РёРЅРєРѕР№
 		  //
-		  // Для горизонтальной ориентации:
+		  // Р”Р»СЏ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅРѕР№ РѕСЂРёРµРЅС‚Р°С†РёРё:
 	      if (orientation == Configuration.ORIENTATION_LANDSCAPE)
 	      {
 				tl.setBackgroundResource(R.drawable.back_horiz);
 	      }
 	      else
-	      // Для вертикальной ориентации:
+	      // Р”Р»СЏ РІРµСЂС‚РёРєР°Р»СЊРЅРѕР№ РѕСЂРёРµРЅС‚Р°С†РёРё:
 	      if (orientation == Configuration.ORIENTATION_PORTRAIT)
 	      {
 				tl.setBackgroundResource(R.drawable.back_vert);
 	      }
-	      // Возвращаем вид с обновлённой фоновой картинкой
+	      // Р’РѕР·РІСЂР°С‰Р°РµРј РІРёРґ СЃ РѕР±РЅРѕРІР»С‘РЅРЅРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№
 	      return v;
 	    }
 	}

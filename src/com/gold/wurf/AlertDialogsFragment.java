@@ -10,10 +10,10 @@ import android.os.Bundle;
 
 public class AlertDialogsFragment extends DialogFragment implements OnClickListener {
 
-	// В зависимости от тега диалога (назначается в коде фрагмента при вызове диалога через show) формируем диалог:
-	// задаём нужные кнопки (да-нет-отмена), заголовок, текст диалога
-	// enum нужен, чтобы заработала конструкция switch(String), так как напрямую switch(String) сделать нельзя (до java 7, 1.7)
-	// используем его ниже в switch(dialogTag.CorrectTagProcessing(getTag()))
+	// Р’ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРіР° РґРёР°Р»РѕРіР° (РЅР°Р·РЅР°С‡Р°РµС‚СЃСЏ РІ РєРѕРґРµ С„СЂР°РіРјРµРЅС‚Р° РїСЂРё РІС‹Р·РѕРІРµ РґРёР°Р»РѕРіР° С‡РµСЂРµР· show) С„РѕСЂРјРёСЂСѓРµРј РґРёР°Р»РѕРі:
+	// Р·Р°РґР°С‘Рј РЅСѓР¶РЅС‹Рµ РєРЅРѕРїРєРё (РґР°-РЅРµС‚-РѕС‚РјРµРЅР°), Р·Р°РіРѕР»РѕРІРѕРє, С‚РµРєСЃС‚ РґРёР°Р»РѕРіР°
+	// enum РЅСѓР¶РµРЅ, С‡С‚РѕР±С‹ Р·Р°СЂР°Р±РѕС‚Р°Р»Р° РєРѕРЅСЃС‚СЂСѓРєС†РёСЏ switch(String), С‚Р°Рє РєР°Рє РЅР°РїСЂСЏРјСѓСЋ switch(String) СЃРґРµР»Р°С‚СЊ РЅРµР»СЊР·СЏ (РґРѕ java 7, 1.7)
+	// РёСЃРїРѕР»СЊР·СѓРµРј РµРіРѕ РЅРёР¶Рµ РІ switch(dialogTag.CorrectTagProcessing(getTag()))
 	public enum dialogTag {
 		WurfsFileNotExistsDialog, prefsWurfsFileNotExistsDialog, ClearWurfsDialog, NOVALUE;
 	    public static dialogTag CorrectTagProcessing(String tag)
@@ -27,34 +27,34 @@ public class AlertDialogsFragment extends DialogFragment implements OnClickListe
 	    } 
 	};
 
-	// При создании диалога
+	// РџСЂРё СЃРѕР·РґР°РЅРёРё РґРёР°Р»РѕРіР°
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	
 		AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
-		// Формируем диалог по его тегу
+		// Р¤РѕСЂРјРёСЂСѓРµРј РґРёР°Р»РѕРі РїРѕ РµРіРѕ С‚РµРіСѓ
 		switch(dialogTag.CorrectTagProcessing(getTag()))
 		{
-			// Диалог "ТОП-10: Файл не найден", показывается при первом щелчке по ТОП-10 в ActionBar,
-			// когда приложение только что установили, первый вурф ещё не рассчитывали
-			// и строить график вурфов не из чего (не создан файл WurfsTop10.DAT)
-			// "ОК" - закрывает диалог
+			// Р”РёР°Р»РѕРі "РўРћРџ-10: Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ", РїРѕРєР°Р·С‹РІР°РµС‚СЃСЏ РїСЂРё РїРµСЂРІРѕРј С‰РµР»С‡РєРµ РїРѕ РўРћРџ-10 РІ ActionBar,
+			// РєРѕРіРґР° РїСЂРёР»РѕР¶РµРЅРёРµ С‚РѕР»СЊРєРѕ С‡С‚Рѕ СѓСЃС‚Р°РЅРѕРІРёР»Рё, РїРµСЂРІС‹Р№ РІСѓСЂС„ РµС‰С‘ РЅРµ СЂР°СЃСЃС‡РёС‚С‹РІР°Р»Рё
+			// Рё СЃС‚СЂРѕРёС‚СЊ РіСЂР°С„РёРє РІСѓСЂС„РѕРІ РЅРµ РёР· С‡РµРіРѕ (РЅРµ СЃРѕР·РґР°РЅ С„Р°Р№Р» WurfsTop10.DAT)
+			// "РћРљ" - Р·Р°РєСЂС‹РІР°РµС‚ РґРёР°Р»РѕРі
 			case WurfsFileNotExistsDialog:
 				adb.setTitle(R.string.dialog_WurfsFileNotExistsDialog_title);
 				adb.setMessage(R.string.dialog_WurfsFileNotExistsDialog_message);
 				adb.setNeutralButton(R.string.dialog_ok, this);
 				break;
-			// Диалог "НАСТРОЙКИ: Файл не найден"
-			// Отображается, когда пользователь кликнул "Да" в диалоге удаления файла вурфов (фрагмент настроек),
-			// но файл вурфов не существует
-			// "ОК" - закрывает диалог
+			// Р”РёР°Р»РѕРі "РќРђРЎРўР РћР™РљР: Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ"
+			// РћС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ, РєРѕРіРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РєР»РёРєРЅСѓР» "Р”Р°" РІ РґРёР°Р»РѕРіРµ СѓРґР°Р»РµРЅРёСЏ С„Р°Р№Р»Р° РІСѓСЂС„РѕРІ (С„СЂР°РіРјРµРЅС‚ РЅР°СЃС‚СЂРѕРµРє),
+			// РЅРѕ С„Р°Р№Р» РІСѓСЂС„РѕРІ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
+			// "РћРљ" - Р·Р°РєСЂС‹РІР°РµС‚ РґРёР°Р»РѕРі
 			case prefsWurfsFileNotExistsDialog:
 				adb.setTitle(R.string.dialog_prefsWurfsFileNotExistsDialog_title);
 				adb.setMessage(R.string.dialog_prefsWurfsFileNotExistsDialog_message);
 				adb.setNeutralButton(R.string.dialog_ok, this);
 				break;
-			// Диалог "НАСТРОЙКИ: Удаление вурфов" показывается, когда пользователь снимает галку "Хранить ТОП-10" в фрагменте настроек
-			// "Да" - удаляет файл вурфов, "Нет" - просто закрывает диалог
+			// Р”РёР°Р»РѕРі "РќРђРЎРўР РћР™РљР: РЈРґР°Р»РµРЅРёРµ РІСѓСЂС„РѕРІ" РїРѕРєР°Р·С‹РІР°РµС‚СЃСЏ, РєРѕРіРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃРЅРёРјР°РµС‚ РіР°Р»РєСѓ "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10" РІ С„СЂР°РіРјРµРЅС‚Рµ РЅР°СЃС‚СЂРѕРµРє
+			// "Р”Р°" - СѓРґР°Р»СЏРµС‚ С„Р°Р№Р» РІСѓСЂС„РѕРІ, "РќРµС‚" - РїСЂРѕСЃС‚Рѕ Р·Р°РєСЂС‹РІР°РµС‚ РґРёР°Р»РѕРі
 			case ClearWurfsDialog:
 				adb.setTitle(R.string.dialog_ClearWurfsDialog_title);
 				adb.setMessage(R.string.dialog_ClearWurfsDialog_message);
@@ -67,13 +67,13 @@ public class AlertDialogsFragment extends DialogFragment implements OnClickListe
 	return adb.create();
 	}
 
-	// Какую кнопку в диалоге нажали
+	// РљР°РєСѓСЋ РєРЅРѕРїРєСѓ РІ РґРёР°Р»РѕРіРµ РЅР°Р¶Р°Р»Рё
 	public void onClick(DialogInterface dialog, int which) {
 	    switch (which) {
 	    case Dialog.BUTTON_POSITIVE:
 		  switch(dialogTag.CorrectTagProcessing(getTag()))
 		  {
-		    // Если "Да" было нажато в диалоге "Удаление вурфов", удаляем файл WurfsTop10.DAT
+		    // Р•СЃР»Рё "Р”Р°" Р±С‹Р»Рѕ РЅР°Р¶Р°С‚Рѕ РІ РґРёР°Р»РѕРіРµ "РЈРґР°Р»РµРЅРёРµ РІСѓСЂС„РѕРІ", СѓРґР°Р»СЏРµРј С„Р°Р№Р» WurfsTop10.DAT
 			case ClearWurfsDialog:
 				File Top10File = new File(getActivity().getFilesDir(), "WurfsTop10.DAT");
 				if(Top10File.exists())
@@ -91,7 +91,7 @@ public class AlertDialogsFragment extends DialogFragment implements OnClickListe
 					
 				}
 				else
-				{	// Файл "WurfsTop10.DAT" не найден? Вызываем соответствующий диалог
+				{	// Р¤Р°Р№Р» "WurfsTop10.DAT" РЅРµ РЅР°Р№РґРµРЅ? Р’С‹Р·С‹РІР°РµРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ РґРёР°Р»РѕРі
 					DialogFragment FileNotExistsDialog = new AlertDialogsFragment();
 					FileNotExistsDialog.show(getFragmentManager(), "prefsWurfsFileNotExistsDialog");
 				}

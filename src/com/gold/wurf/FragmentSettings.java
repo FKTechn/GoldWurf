@@ -17,7 +17,7 @@ public class FragmentSettings extends PreferenceFragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        // Загружаем настройки из файла xml/preferences.xml
+        // Р—Р°РіСЂСѓР¶Р°РµРј РЅР°СЃС‚СЂРѕР№РєРё РёР· С„Р°Р№Р»Р° xml/preferences.xml
         addPreferencesFromResource(R.xml.preferences);
     }
 
@@ -25,18 +25,18 @@ public class FragmentSettings extends PreferenceFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        // Фоновый цвет фрагмента настроек - чёрный
+        // Р¤РѕРЅРѕРІС‹Р№ С†РІРµС‚ С„СЂР°РіРјРµРЅС‚Р° РЅР°СЃС‚СЂРѕРµРє - С‡С‘СЂРЅС‹Р№
         //view.setBackgroundColor(getResources().getColor(R.color.FragmentSettingsBackground));// .setBackgroundResource(R.drawable.background_vert);
 
-        // Находим галку "Хранить ТОП-10"
+        // РќР°С…РѕРґРёРј РіР°Р»РєСѓ "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10"
         final CheckBoxPreference checkboxPref = (CheckBoxPreference) getPreferenceManager().findPreference("pref_SaveWurfs");
-        // Обработчик смены состояния галки "Хранить ТОП-10"
+        // РћР±СЂР°Р±РѕС‚С‡РёРє СЃРјРµРЅС‹ СЃРѕСЃС‚РѕСЏРЅРёСЏ РіР°Р»РєРё "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10"
         checkboxPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if(newValue instanceof Boolean){
                     Boolean boolVal = (Boolean)newValue;
                     File Top10File = new File(getActivity().getFilesDir(), "WurfsTop10.DAT");
-                    // Если галка снята пользователем и файл вурфов существует, вызываем диалог "Удаление вурфов"
+                    // Р•СЃР»Рё РіР°Р»РєР° СЃРЅСЏС‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј Рё С„Р°Р№Р» РІСѓСЂС„РѕРІ СЃСѓС‰РµСЃС‚РІСѓРµС‚, РІС‹Р·С‹РІР°РµРј РґРёР°Р»РѕРі "РЈРґР°Р»РµРЅРёРµ РІСѓСЂС„РѕРІ"
                     if (!boolVal && Top10File.exists())
                     {
         				DialogFragment ClearWurfsDialog = new AlertDialogsFragment();

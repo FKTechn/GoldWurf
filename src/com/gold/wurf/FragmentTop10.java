@@ -29,12 +29,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FragmentTop10 extends Fragment {
-	// График вурфов
+	// Р“СЂР°С„РёРє РІСѓСЂС„РѕРІ
 	private XYPlot Top10WurfsPlot = null;
 	private SimpleXYSeries WurfsBarSeries, Wurf_1618_Harmony_Serie;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Отображаем содержимое фрагмента fragment_top10
+		// РћС‚РѕР±СЂР°Р¶Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„СЂР°РіРјРµРЅС‚Р° fragment_top10
 		View view =  inflater.inflate(R.layout.fragment_top10, null);
 		setRetainInstance(true);
 		return view;
@@ -43,61 +43,61 @@ public class FragmentTop10 extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		// Подгружаем ранее рассчитаные вурфы из файла и выводим на график
+		// РџРѕРґРіСЂСѓР¶Р°РµРј СЂР°РЅРµРµ СЂР°СЃСЃС‡РёС‚Р°РЅС‹Рµ РІСѓСЂС„С‹ РёР· С„Р°Р№Р»Р° Рё РІС‹РІРѕРґРёРј РЅР° РіСЂР°С„РёРє
 		LoadAndDisplayWurfs();
 	}
 
-	/** Метод подгружает и отображает вурфы, записанные построчно в файл WurfsTop10.DAT
+	/** РњРµС‚РѕРґ РїРѕРґРіСЂСѓР¶Р°РµС‚ Рё РѕС‚РѕР±СЂР°Р¶Р°РµС‚ РІСѓСЂС„С‹, Р·Р°РїРёСЃР°РЅРЅС‹Рµ РїРѕСЃС‚СЂРѕС‡РЅРѕ РІ С„Р°Р№Р» WurfsTop10.DAT
 	 * 
 	 */
 	public void LoadAndDisplayWurfs()
 	  {
-        // График вурфов
+        // Р“СЂР°С„РёРє РІСѓСЂС„РѕРІ
         Top10WurfsPlot = (XYPlot) getView().findViewById(R.id.Top10Plot);
         Top10WurfsPlot.clear();
 
-		// Считываем вурфы построчно из файла WurfsTop10.DAT и выводим на график
-		// Всего строк в файле до 10, об этом заботится public void onClick(View v) в FragmentMain.java, так что здесь не проверяем
-		// Соответственно на графике будет до 10 столбиков (баров)
+		// РЎС‡РёС‚С‹РІР°РµРј РІСѓСЂС„С‹ РїРѕСЃС‚СЂРѕС‡РЅРѕ РёР· С„Р°Р№Р»Р° WurfsTop10.DAT Рё РІС‹РІРѕРґРёРј РЅР° РіСЂР°С„РёРє
+		// Р’СЃРµРіРѕ СЃС‚СЂРѕРє РІ С„Р°Р№Р»Рµ РґРѕ 10, РѕР± СЌС‚РѕРј Р·Р°Р±РѕС‚РёС‚СЃСЏ public void onClick(View v) РІ FragmentMain.java, С‚Р°Рє С‡С‚Рѕ Р·РґРµСЃСЊ РЅРµ РїСЂРѕРІРµСЂСЏРµРј
+		// РЎРѕРѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕ РЅР° РіСЂР°С„РёРєРµ Р±СѓРґРµС‚ РґРѕ 10 СЃС‚РѕР»Р±РёРєРѕРІ (Р±Р°СЂРѕРІ)
 		File Top10File = new File(getActivity().getFilesDir(), "WurfsTop10.DAT");
 		if(Top10File.exists())
 		{
-	        WurfsBarSeries = new SimpleXYSeries("ТОП-10 ВУРФОВ");
+	        WurfsBarSeries = new SimpleXYSeries("РўРћРџ-10 Р’РЈР Р¤РћР’");
 	        WurfsBarSeries.useImplicitXVals();
-	        // Подписи - значения вурфов вверху баров
+	        // РџРѕРґРїРёСЃРё - Р·РЅР°С‡РµРЅРёСЏ РІСѓСЂС„РѕРІ РІРІРµСЂС…Сѓ Р±Р°СЂРѕРІ
 	        BarFormatter bf1 = new BarFormatter(Color.argb(100, 0, 200, 0), Color.rgb(0, 10, 80));
 	        bf1.setPointLabelFormatter(new PointLabelFormatter(Color.WHITE));
-		    // Градиентная заливка баров
+		    // Р“СЂР°РґРёРµРЅС‚РЅР°СЏ Р·Р°Р»РёРІРєР° Р±Р°СЂРѕРІ
 	        Paint barFill = new Paint();
 	        barFill.setAlpha(150);
 	        barFill.setShader(new LinearGradient(0, 0, 50, 250, Color.CYAN, Color.BLUE, Shader.TileMode.MIRROR));
 	        bf1.setFillPaint(barFill);
-	        // Тёмно-серая рамка вокруг графика, т.к. по умолчанию график заполняет не всё пространство экрана
+	        // РўС‘РјРЅРѕ-СЃРµСЂР°СЏ СЂР°РјРєР° РІРѕРєСЂСѓРі РіСЂР°С„РёРєР°, С‚.Рє. РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РіСЂР°С„РёРє Р·Р°РїРѕР»РЅСЏРµС‚ РЅРµ РІСЃС‘ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ СЌРєСЂР°РЅР°
 			Top10WurfsPlot.setBorderStyle(XYPlot.BorderStyle.SQUARE, null, null);
 			Top10WurfsPlot.getBorderPaint().setStrokeWidth(6);
 			Top10WurfsPlot.getBorderPaint().setAntiAlias(false);
 			Top10WurfsPlot.getBorderPaint().setColor(Color.DKGRAY);
-        	// Линия "1.618"
+        	// Р›РёРЅРёСЏ "1.618"
 	        Wurf_1618_Harmony_Serie = new SimpleXYSeries("1.618");
 	        LineAndPointFormatter lineAndPointFormatter = new LineAndPointFormatter(Color.RED, Color.RED, null, null);
-	        // Толщина линии
+	        // РўРѕР»С‰РёРЅР° Р»РёРЅРёРё
 	        Paint paint = lineAndPointFormatter.getLinePaint();
 	        paint.setStrokeWidth(8);
 	        lineAndPointFormatter.setLinePaint(paint);
 	        Wurf_1618_Harmony_Serie.useImplicitXVals();
-	        // Добавляем серии и сетку на график
+	        // Р”РѕР±Р°РІР»СЏРµРј СЃРµСЂРёРё Рё СЃРµС‚РєСѓ РЅР° РіСЂР°С„РёРє
 	        Top10WurfsPlot.addSeries(WurfsBarSeries, bf1);
 	        Top10WurfsPlot.addSeries(Wurf_1618_Harmony_Serie, lineAndPointFormatter);
 	        Top10WurfsPlot.setDomainStepValue(3);
 	        Top10WurfsPlot.setTicksPerRangeLabel(3);
-			// Позиция легенды
+			// РџРѕР·РёС†РёСЏ Р»РµРіРµРЅРґС‹
 			// Top10WurfsPlot.getLegendWidget().setSize(new SizeMetrics(15, SizeLayoutType.ABSOLUTE, 200, SizeLayoutType.ABSOLUTE));
-	        // Смещение баров от краёв экрана
+	        // РЎРјРµС‰РµРЅРёРµ Р±Р°СЂРѕРІ РѕС‚ РєСЂР°С‘РІ СЌРєСЂР°РЅР°
 	        Top10WurfsPlot.setGridPadding(25, 0, 25, 0);
-	        // Толщина баров
+	        // РўРѕР»С‰РёРЅР° Р±Р°СЂРѕРІ
 	        BarRenderer<?> barRenderer = (BarRenderer<?>) Top10WurfsPlot.getRenderer(BarRenderer.class);
 	        if(barRenderer != null) { barRenderer.setBarWidth(32); }
-	        // Загружаем вурфы из файла в массив series1Numbers
+	        // Р—Р°РіСЂСѓР¶Р°РµРј РІСѓСЂС„С‹ РёР· С„Р°Р№Р»Р° РІ РјР°СЃСЃРёРІ series1Numbers
 	        Double[] series1Numbers = new Double[10];
 			int i = 0, j = 0;
 
@@ -123,26 +123,26 @@ public class FragmentTop10 extends Fragment {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				/* Определяем Max массива series1Numbers */
-				/* В i лежит кол-во заполненных ячеек series1Numbers */
+				/* РћРїСЂРµРґРµР»СЏРµРј Max РјР°СЃСЃРёРІР° series1Numbers */
+				/* Р’ i Р»РµР¶РёС‚ РєРѕР»-РІРѕ Р·Р°РїРѕР»РЅРµРЅРЅС‹С… СЏС‡РµРµРє series1Numbers */
 				double Max = series1Numbers[0];
 				for(j = 1; j <= i-1; j++)
 				{
 					if(series1Numbers[j] > Max) { Max = series1Numbers[j]; }
 				}
 
-		        // Масштабирование баров по высоте: равнение на самый высокий бар (второй параметр) + 0.2 (чтобы поместилась надпись со значением вурфа)
+		        // РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ Р±Р°СЂРѕРІ РїРѕ РІС‹СЃРѕС‚Рµ: СЂР°РІРЅРµРЅРёРµ РЅР° СЃР°РјС‹Р№ РІС‹СЃРѕРєРёР№ Р±Р°СЂ (РІС‚РѕСЂРѕР№ РїР°СЂР°РјРµС‚СЂ) + 0.2 (С‡С‚РѕР±С‹ РїРѕРјРµСЃС‚РёР»Р°СЃСЊ РЅР°РґРїРёСЃСЊ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј РІСѓСЂС„Р°)
 		        Top10WurfsPlot.setRangeBoundaries(0, Max + 0.2, BoundaryMode.FIXED);
-				// setDomainBoundaries - количество позиций для баров (по кол-ву строк в файле)
-				// Если i == 1, то в файле одна строка. Строим бар по центру
+				// setDomainBoundaries - РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР·РёС†РёР№ РґР»СЏ Р±Р°СЂРѕРІ (РїРѕ РєРѕР»-РІСѓ СЃС‚СЂРѕРє РІ С„Р°Р№Р»Рµ)
+				// Р•СЃР»Рё i == 1, С‚Рѕ РІ С„Р°Р№Р»Рµ РѕРґРЅР° СЃС‚СЂРѕРєР°. РЎС‚СЂРѕРёРј Р±Р°СЂ РїРѕ С†РµРЅС‚СЂСѓ
 		        if (i == 1) { Top10WurfsPlot.setDomainBoundaries(-0.5, 0.5, BoundaryMode.FIXED); }
 		        else { Top10WurfsPlot.setDomainBoundaries(0, i-1, BoundaryMode.FIXED); }
 		        WurfsBarSeries.setModel(Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY);
-		        // Перерисовываем график
+		        // РџРµСЂРµСЂРёСЃРѕРІС‹РІР°РµРј РіСЂР°С„РёРє
 		        Top10WurfsPlot.redraw();
 			}
 			else
-			{	// Файл "WurfsTop10.DAT" не найден? Вызываем соответствующий диалог
+			{	// Р¤Р°Р№Р» "WurfsTop10.DAT" РЅРµ РЅР°Р№РґРµРЅ? Р’С‹Р·С‹РІР°РµРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ РґРёР°Р»РѕРі
 				DialogFragment FileNotExistsDialog = new AlertDialogsFragment();
 				FileNotExistsDialog.show(getFragmentManager(), "WurfsFileNotExistsDialog");
 			}

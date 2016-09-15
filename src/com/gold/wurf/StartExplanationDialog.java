@@ -24,7 +24,7 @@ public class StartExplanationDialog extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		// Получаем тег, по которому определяем, какое из 4 объяснений (ФИСМ) показывать
+		// РџРѕР»СѓС‡Р°РµРј С‚РµРі, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РѕРїСЂРµРґРµР»СЏРµРј, РєР°РєРѕРµ РёР· 4 РѕР±СЉСЏСЃРЅРµРЅРёР№ (Р¤РРЎРњ) РїРѕРєР°Р·С‹РІР°С‚СЊ
 		mTag = getArguments().getString("TAG");
 
 		AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
@@ -71,9 +71,9 @@ public class StartExplanationDialog extends DialogFragment {
 		adb.setNeutralButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// По нажатию на кнопку "ОК" закрываем диалог
+				// РџРѕ РЅР°Р¶Р°С‚РёСЋ РЅР° РєРЅРѕРїРєСѓ "РћРљ" Р·Р°РєСЂС‹РІР°РµРј РґРёР°Р»РѕРі
 				dismiss();
-				// Ставим первоначальную тему (это для старых версий андроида, чтобы цвета передавались корректно)
+				// РЎС‚Р°РІРёРј РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅСѓСЋ С‚РµРјСѓ (СЌС‚Рѕ РґР»СЏ СЃС‚Р°СЂС‹С… РІРµСЂСЃРёР№ Р°РЅРґСЂРѕРёРґР°, С‡С‚РѕР±С‹ С†РІРµС‚Р° РїРµСЂРµРґР°РІР°Р»РёСЃСЊ РєРѕСЂСЂРµРєС‚РЅРѕ)
 				getActivity().setTheme(R.style.AppTheme);
 			}});
 

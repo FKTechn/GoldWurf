@@ -32,97 +32,97 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class FragmentMain extends Fragment implements android.view.View.OnClickListener {
-	// Логгирование внутри IDE
+	// Р›РѕРіРіРёСЂРѕРІР°РЅРёРµ РІРЅСѓС‚СЂРё IDE
 	private static final String LOG_TAG = "FlankLOGS";
 
-	// Кнопка "Рассчитать вурф"
+	// РљРЅРѕРїРєР° "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РІСѓСЂС„"
 	Button BtnWurf;
-	// TextView с результатами (вычисленный вурф и первичное объяснение)
+	// TextView СЃ СЂРµР·СѓР»СЊС‚Р°С‚Р°РјРё (РІС‹С‡РёСЃР»РµРЅРЅС‹Р№ РІСѓСЂС„ Рё РїРµСЂРІРёС‡РЅРѕРµ РѕР±СЉСЏСЃРЅРµРЅРёРµ)
 	TextView tvWurfResult;
-	// 4 выпадающих списка и наполнение каждого (числа от 1 до 10)
+	// 4 РІС‹РїР°РґР°СЋС‰РёС… СЃРїРёСЃРєР° Рё РЅР°РїРѕР»РЅРµРЅРёРµ РєР°Р¶РґРѕРіРѕ (С‡РёСЃР»Р° РѕС‚ 1 РґРѕ 10)
 	Spinner r1, r2, r3, r4;
 	String[] spinner_values = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-	// Настройки, которые хранятся в файле. "Хранить ТОП-10" фрагмента настроек
+	// РќР°СЃС‚СЂРѕР№РєРё, РєРѕС‚РѕСЂС‹Рµ С…СЂР°РЅСЏС‚СЃСЏ РІ С„Р°Р№Р»Рµ. "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10" С„СЂР°РіРјРµРЅС‚Р° РЅР°СЃС‚СЂРѕРµРє
 	SharedPreferences sPref;
 
-	// Шрифтовые переменные
+	// РЁСЂРёС„С‚РѕРІС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
 	public static final String MYFONT = "fonts/Monotype_corsiva.ttf";
 	private static Typeface myfont = null;
 
-	// Создаём объект, который содержит метод setBackgroundImage замены фоновой картинки 
-	// в зависимости от ориентации экрана
+	// РЎРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ СЃРѕРґРµСЂР¶РёС‚ РјРµС‚РѕРґ setBackgroundImage Р·Р°РјРµРЅС‹ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРё 
+	// РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕСЂРёРµРЅС‚Р°С†РёРё СЌРєСЂР°РЅР°
     DynamicOrientationDetection DOD = new DynamicOrientationDetection();
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
-	    // Ставим фоновую картинку в зависимости от ориентации экрана
-	    // getClass().getSimpleName() - это "FragmentMain", имя класса
+	    // РЎС‚Р°РІРёРј С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕСЂРёРµРЅС‚Р°С†РёРё СЌРєСЂР°РЅР°
+	    // getClass().getSimpleName() - СЌС‚Рѕ "FragmentMain", РёРјСЏ РєР»Р°СЃСЃР°
 	    DOD.setBackgroundImage(this.getResources().getConfiguration().orientation, getClass().getSimpleName(), getView());
     }
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    // Отображаем содержимое фрагмента fragment_main
+	    // РћС‚РѕР±СЂР°Р¶Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„СЂР°РіРјРµРЅС‚Р° fragment_main
 	    setRetainInstance(true);
-	    // Получаем вид фрагмента (по умолчанию с вертикальной фоновой картинкой снежинки)
+	    // РџРѕР»СѓС‡Р°РµРј РІРёРґ С„СЂР°РіРјРµРЅС‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЃ РІРµСЂС‚РёРєР°Р»СЊРЅРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№ СЃРЅРµР¶РёРЅРєРё)
 	    View v = inflater.inflate(R.layout.fragment_main, null);
-	    // Вызываем метод, который проверяет ориентацию экрана и ставит соответствующую фоновую картинку со снежинкой
+	    // Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ, РєРѕС‚РѕСЂС‹Р№ РїСЂРѕРІРµСЂСЏРµС‚ РѕСЂРёРµРЅС‚Р°С†РёСЋ СЌРєСЂР°РЅР° Рё СЃС‚Р°РІРёС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰СѓСЋ С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ СЃРѕ СЃРЅРµР¶РёРЅРєРѕР№
 	    DOD.setBackgroundImage(this.getResources().getConfiguration().orientation, getClass().getSimpleName(), v);
-	    // Возвращаем вид с нужной фоновой картинкой
+	    // Р’РѕР·РІСЂР°С‰Р°РµРј РІРёРґ СЃ РЅСѓР¶РЅРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№
 	    return v;
 	}
 
-	// Обработчик нажатия кнопки "Рассчитать вурф"
+	// РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РІСѓСЂС„"
 	public void onClick(View v)
 	{
-		// Получаем значения спиннеров r1, r2, r3, r4
+		// РџРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёСЏ СЃРїРёРЅРЅРµСЂРѕРІ r1, r2, r3, r4
 		float R1 = Integer.parseInt(r1.getSelectedItem().toString());
 		float R2 = Integer.parseInt(r2.getSelectedItem().toString());
 		float R3 = Integer.parseInt(r3.getSelectedItem().toString());
 		float R4 = Integer.parseInt(r4.getSelectedItem().toString());
 
-		// Вычисляем ВУРФ
+		// Р’С‹С‡РёСЃР»СЏРµРј Р’РЈР Р¤
 		float WurfValue =  ((R1 + 2*R2 + R3)*(R2 + 2*R3 + R4)) / ((R2 + R3)*(R1 + 2*R2 + 2*R3 + R4));		
 
-		// Выводим результат в tvWurfResult
-		// Вурф будет вида 1.618
+		// Р’С‹РІРѕРґРёРј СЂРµР·СѓР»СЊС‚Р°С‚ РІ tvWurfResult
+		// Р’СѓСЂС„ Р±СѓРґРµС‚ РІРёРґР° 1.618
 		DecimalFormat WurfFormat = new DecimalFormat("#.###");
 		String Explanation = getString(R.string.YourWurf) + WurfFormat.format(WurfValue) + " ";
-		// Разница между идеальным вурфом и вычисленным
+		// Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ РёРґРµР°Р»СЊРЅС‹Рј РІСѓСЂС„РѕРј Рё РІС‹С‡РёСЃР»РµРЅРЅС‹Рј
 		float Difference = Math.abs(Math.round(1000*(1.6180339887498948482045868343655 - WurfValue)));
-		// Если разница близка к нулю, выводим поздравление
+		// Р•СЃР»Рё СЂР°Р·РЅРёС†Р° Р±Р»РёР·РєР° Рє РЅСѓР»СЋ, РІС‹РІРѕРґРёРј РїРѕР·РґСЂР°РІР»РµРЅРёРµ
 		if (Difference == 0)
 		{
 			Explanation = getString(R.string.YourWurfIsIdeal);
 		}
-		// иначе - обычный текст с вычисленным вурфом и кол-вом шагов, оставшихся до гармонии
+		// РёРЅР°С‡Рµ - РѕР±С‹С‡РЅС‹Р№ С‚РµРєСЃС‚ СЃ РІС‹С‡РёСЃР»РµРЅРЅС‹Рј РІСѓСЂС„РѕРј Рё РєРѕР»-РІРѕРј С€Р°РіРѕРІ, РѕСЃС‚Р°РІС€РёС…СЃСЏ РґРѕ РіР°СЂРјРѕРЅРёРё
 		else
 		{
 			Explanation += getString(R.string.WurfResultExplanation)+ " " + get_correct_str(Math.abs(Math.round(1000*(1.6180339887498948482045868343655 - WurfValue))));
 		}
-		// Выводим вычисленный вурф и сообщение
+		// Р’С‹РІРѕРґРёРј РІС‹С‡РёСЃР»РµРЅРЅС‹Р№ РІСѓСЂС„ Рё СЃРѕРѕР±С‰РµРЅРёРµ
 		tvWurfResult.setText(Explanation);
 		tvWurfResult.setBackgroundResource(R.color.tvExplanationColor);
-		Log.d(LOG_TAG, "Отработала функция расчёта вурфа с параметрами "+(int)R1+" "+(int)R2+" "+(int)R3+" "+(int)R4);
+		Log.d(LOG_TAG, "РћС‚СЂР°Р±РѕС‚Р°Р»Р° С„СѓРЅРєС†РёСЏ СЂР°СЃС‡С‘С‚Р° РІСѓСЂС„Р° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё "+(int)R1+" "+(int)R2+" "+(int)R3+" "+(int)R4);
 
-	    // Получаем статус галки "Хранить ТОП-10" фрагмента настроек (true/false)
+	    // РџРѕР»СѓС‡Р°РµРј СЃС‚Р°С‚СѓСЃ РіР°Р»РєРё "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10" С„СЂР°РіРјРµРЅС‚Р° РЅР°СЃС‚СЂРѕРµРє (true/false)
 	    Boolean pref_SaveWurfs = true;
 	    sPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 	    if(sPref.contains("pref_SaveWurfs"))
 	    {
 		    pref_SaveWurfs = sPref.getBoolean("pref_SaveWurfs", true);
 	    }
-		// Пишем или НЕ пишем рассчитанный вурф в файл. Зависит от статуса галки "Хранить ТОП-10" в фрагменте настроек
-		// Если галка УСТАНОВЛЕНА
+		// РџРёС€РµРј РёР»Рё РќР• РїРёС€РµРј СЂР°СЃСЃС‡РёС‚Р°РЅРЅС‹Р№ РІСѓСЂС„ РІ С„Р°Р№Р». Р—Р°РІРёСЃРёС‚ РѕС‚ СЃС‚Р°С‚СѓСЃР° РіР°Р»РєРё "РҐСЂР°РЅРёС‚СЊ РўРћРџ-10" РІ С„СЂР°РіРјРµРЅС‚Рµ РЅР°СЃС‚СЂРѕРµРє
+		// Р•СЃР»Рё РіР°Р»РєР° РЈРЎРўРђРќРћР’Р›Р•РќРђ
 		if(pref_SaveWurfs)
 		{
-		    // Пишем вурф в файл WurfsTop10.DAT в режиме append:
+		    // РџРёС€РµРј РІСѓСЂС„ РІ С„Р°Р№Р» WurfsTop10.DAT РІ СЂРµР¶РёРјРµ append:
 		    // 1.324
 		    // 1.115
 		    // 1.895
 		    // ...
 		    File Top10File = new File(getActivity().getFilesDir(), "WurfsTop10.DAT");
-		    // Если файл WurfsTop10.DAT не существует (например, при первом запуске приложения), создадим его
+		    // Р•СЃР»Рё С„Р°Р№Р» WurfsTop10.DAT РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ (РЅР°РїСЂРёРјРµСЂ, РїСЂРё РїРµСЂРІРѕРј Р·Р°РїСѓСЃРєРµ РїСЂРёР»РѕР¶РµРЅРёСЏ), СЃРѕР·РґР°РґРёРј РµРіРѕ
 		    if(!Top10File.exists()) {
 				try {
 					Top10File.createNewFile();
@@ -131,19 +131,19 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 				}
 		   	}
 
-		    // Топ-10 означает, что хранить надо только крайние 10 вурфов => нам нужен 10-строчный файл
-		    // Если кол-во строк в файле == 10, копируем строки 2..9 в массив, потом в этот же массив на 10-е место добавляем новый вурф
-		    // и записываем массив в файл построчно
+		    // РўРѕРї-10 РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ С…СЂР°РЅРёС‚СЊ РЅР°РґРѕ С‚РѕР»СЊРєРѕ РєСЂР°Р№РЅРёРµ 10 РІСѓСЂС„РѕРІ => РЅР°Рј РЅСѓР¶РµРЅ 10-СЃС‚СЂРѕС‡РЅС‹Р№ С„Р°Р№Р»
+		    // Р•СЃР»Рё РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ С„Р°Р№Р»Рµ == 10, РєРѕРїРёСЂСѓРµРј СЃС‚СЂРѕРєРё 2..9 РІ РјР°СЃСЃРёРІ, РїРѕС‚РѕРј РІ СЌС‚РѕС‚ Р¶Рµ РјР°СЃСЃРёРІ РЅР° 10-Рµ РјРµСЃС‚Рѕ РґРѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ РІСѓСЂС„
+		    // Рё Р·Р°РїРёСЃС‹РІР°РµРј РјР°СЃСЃРёРІ РІ С„Р°Р№Р» РїРѕСЃС‚СЂРѕС‡РЅРѕ
 		    FileOutputStream outputStream;
 		    try {
 		        outputStream = getActivity().openFileOutput(Top10File.getName(), Context.MODE_PRIVATE | Context.MODE_APPEND);
-			    // Проверим кол-во строк в файле
+			    // РџСЂРѕРІРµСЂРёРј РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ С„Р°Р№Р»Рµ
 			    int lines = 0;
 			    try {lines=CountLines(Top10File.getAbsolutePath());} catch (IOException e2) {e2.printStackTrace();/*e2.getMessage()*/}
 			    if (lines == 10)
 			    {
 			    	String WurfTmpArray[] = new String[10];
-			    	// Для построчного чтения файла в массив WurfTmpArray
+			    	// Р”Р»СЏ РїРѕСЃС‚СЂРѕС‡РЅРѕРіРѕ С‡С‚РµРЅРёСЏ С„Р°Р№Р»Р° РІ РјР°СЃСЃРёРІ WurfTmpArray
 					FileInputStream inputStream = getActivity().openFileInput(Top10File.getName());
 					InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 					BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -157,13 +157,13 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 						}
 						lines++;
 					}
-					// 10-я строка
+					// 10-СЏ СЃС‚СЂРѕРєР°
 					WurfTmpArray[lines] = WurfFormat.format(WurfValue);//String.valueOf((Math.round(WurfValue*1000)/1000.0d))+"\n";
-					// Очищаем файл WurfsTop10.DAT
+					// РћС‡РёС‰Р°РµРј С„Р°Р№Р» WurfsTop10.DAT
 					FileWriter fw = new FileWriter(Top10File, false);
 			        fw.write("");
 			        fw.close();
-			        // Пишем в файл WurfsTop10.DAT массив WurfTmpArray построчно
+			        // РџРёС€РµРј РІ С„Р°Р№Р» WurfsTop10.DAT РјР°СЃСЃРёРІ WurfTmpArray РїРѕСЃС‚СЂРѕС‡РЅРѕ
 			        for (lines = 0; lines < 9; lines++)
 			        {
 			        	outputStream.write((WurfTmpArray[lines]+"\n").getBytes());
@@ -177,13 +177,13 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 	}
 	}
 
-	// Метод выдаёт правильное склонение слова "шаг" в зависимости от переданного в параметре числа шагов, оставшихся до гармонии
-	// Например, результатом выполнения будет "20 шагов."
+	// РњРµС‚РѕРґ РІС‹РґР°С‘С‚ РїСЂР°РІРёР»СЊРЅРѕРµ СЃРєР»РѕРЅРµРЅРёРµ СЃР»РѕРІР° "С€Р°Рі" РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРµСЂРµРґР°РЅРЅРѕРіРѕ РІ РїР°СЂР°РјРµС‚СЂРµ С‡РёСЃР»Р° С€Р°РіРѕРІ, РѕСЃС‚Р°РІС€РёС…СЃСЏ РґРѕ РіР°СЂРјРѕРЅРёРё
+	// РќР°РїСЂРёРјРµСЂ, СЂРµР·СѓР»СЊС‚Р°С‚РѕРј РІС‹РїРѕР»РЅРµРЅРёСЏ Р±СѓРґРµС‚ "20 С€Р°РіРѕРІ."
 	public String get_correct_str(long l) 
 	 {
-		String str1 = "шаг.";
-		String str2 = "шага.";
-		String str3 = "шагов.";
+		String str1 = "С€Р°Рі.";
+		String str2 = "С€Р°РіР°.";
+		String str3 = "С€Р°РіРѕРІ.";
 		
 		if (l < 0) l *= (-1);
 	    int val = (int) (l % 100);
@@ -197,7 +197,7 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 	    }
 	 }
 
-	// Метод подсчитывает кол-во строк в переданном файле (передаётся полное (с путём) имя файла WurfsTop10.DAT)
+	// РњРµС‚РѕРґ РїРѕРґСЃС‡РёС‚С‹РІР°РµС‚ РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ РїРµСЂРµРґР°РЅРЅРѕРј С„Р°Р№Р»Рµ (РїРµСЂРµРґР°С‘С‚СЃСЏ РїРѕР»РЅРѕРµ (СЃ РїСѓС‚С‘Рј) РёРјСЏ С„Р°Р№Р»Р° WurfsTop10.DAT)
 	public int CountLines(String filename) throws IOException {
 		LineNumberReader reader  = new LineNumberReader(new FileReader(filename));
 		int cnt = 0;
@@ -211,11 +211,11 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-	    // Восстанавливаем элеметы выпадающих списков r1, r2, r3, r4
-	    // spinner_layout - мой стиль для спиннеров (размер текста, gravity по центру)
+	    // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЌР»РµРјРµС‚С‹ РІС‹РїР°РґР°СЋС‰РёС… СЃРїРёСЃРєРѕРІ r1, r2, r3, r4
+	    // spinner_layout - РјРѕР№ СЃС‚РёР»СЊ РґР»СЏ СЃРїРёРЅРЅРµСЂРѕРІ (СЂР°Р·РјРµСЂ С‚РµРєСЃС‚Р°, gravity РїРѕ С†РµРЅС‚СЂСѓ)
 		ArrayAdapter<String> adapter = new ArrayAdapter<String> (getActivity(), R.layout.spinner_layout, spinner_values)
 		{
-			// Текст в спиннерах будет расположен по центру
+			// РўРµРєСЃС‚ РІ СЃРїРёРЅРЅРµСЂР°С… Р±СѓРґРµС‚ СЂР°СЃРїРѕР»РѕР¶РµРЅ РїРѕ С†РµРЅС‚СЂСѓ
 			public View getDropDownView(int position, View convertView, ViewGroup parent) {
 			       View v = super.getDropDownView(position, convertView, parent);
 			       ((TextView) v).setGravity(Gravity.CENTER);
@@ -224,29 +224,29 @@ public class FragmentMain extends Fragment implements android.view.View.OnClickL
 		};
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		Log.d(LOG_TAG, "Стиль для спиннеров подключен");
+		Log.d(LOG_TAG, "РЎС‚РёР»СЊ РґР»СЏ СЃРїРёРЅРЅРµСЂРѕРІ РїРѕРґРєР»СЋС‡РµРЅ");
 
-		// Находим спиннеры (выпад. списки) r1, r2, r3, r4 и присваиваем им адаптер (содержимое 1..10)
+		// РќР°С…РѕРґРёРј СЃРїРёРЅРЅРµСЂС‹ (РІС‹РїР°Рґ. СЃРїРёСЃРєРё) r1, r2, r3, r4 Рё РїСЂРёСЃРІР°РёРІР°РµРј РёРј Р°РґР°РїС‚РµСЂ (СЃРѕРґРµСЂР¶РёРјРѕРµ 1..10)
 		r1 = (Spinner) getView().findViewById(R.id.r1); r1.setAdapter(adapter);
 		r2 = (Spinner) getView().findViewById(R.id.r2); r2.setAdapter(adapter);
 		r3 = (Spinner) getView().findViewById(R.id.r3); r3.setAdapter(adapter);
 		r4 = (Spinner) getView().findViewById(R.id.r4); r4.setAdapter(adapter);
-		Log.d(LOG_TAG, "Спиннеры найдены");
+		Log.d(LOG_TAG, "РЎРїРёРЅРЅРµСЂС‹ РЅР°Р№РґРµРЅС‹");
 
-		// Находим кнопку "Рассчитать вурф" и текстовое поле с пояснением результата
+		// РќР°С…РѕРґРёРј РєРЅРѕРїРєСѓ "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РІСѓСЂС„" Рё С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ СЃ РїРѕСЏСЃРЅРµРЅРёРµРј СЂРµР·СѓР»СЊС‚Р°С‚Р°
 		BtnWurf = (Button) getView().findViewById(R.id.BtnWurf);
 		BtnWurf.setOnClickListener(this);
 		tvWurfResult = (TextView) getView().findViewById(R.id.textView_WURF_Value);
 		tvWurfResult.setMovementMethod(new ScrollingMovementMethod());
 		//tvWurfResult.setScrollbarFadingEnabled(false);
-		// Устанавливаем им шрифт Monotype corsiva
+		// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёРј С€СЂРёС„С‚ Monotype corsiva
 		if (myfont == null)
 		{
 			Typeface Monotype_corsiva = Typeface.createFromAsset(getActivity().getAssets(), MYFONT);
 			tvWurfResult.setTypeface(Monotype_corsiva);
 			BtnWurf.setTypeface(Monotype_corsiva);
 		}
-		Log.d(LOG_TAG, "Визуальные элементы найдены");
+		Log.d(LOG_TAG, "Р’РёР·СѓР°Р»СЊРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ РЅР°Р№РґРµРЅС‹");
 	}
 
 }

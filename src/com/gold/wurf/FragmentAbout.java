@@ -13,31 +13,31 @@ import android.widget.TextView;
 
 public class FragmentAbout extends Fragment{
 
-	// Создаём объект, который содержит метод замены фоновой картинки в зависимости от ориентации экрана
+	// РЎРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ СЃРѕРґРµСЂР¶РёС‚ РјРµС‚РѕРґ Р·Р°РјРµРЅС‹ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕСЂРёРµРЅС‚Р°С†РёРё СЌРєСЂР°РЅР°
     DynamicOrientationDetection DOD = new DynamicOrientationDetection();
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	   super.onConfigurationChanged(newConfig);
-       // Ставим фоновую картинку в зависимости от ориентации экрана
+       // РЎС‚Р°РІРёРј С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕСЂРёРµРЅС‚Р°С†РёРё СЌРєСЂР°РЅР°
 	   DOD.setBackgroundImage(this.getResources().getConfiguration().orientation, getClass().getSimpleName(), getView());
 	}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Отображаем содержимое фрагмента fragment_about
+		// РћС‚РѕР±СЂР°Р¶Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„СЂР°РіРјРµРЅС‚Р° fragment_about
 	  	setRetainInstance(true);
-		// Получаем вид фрагмента (по умолчанию с вертикальной фоновой картинкой снежинки)
+		// РџРѕР»СѓС‡Р°РµРј РІРёРґ С„СЂР°РіРјРµРЅС‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЃ РІРµСЂС‚РёРєР°Р»СЊРЅРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№ СЃРЅРµР¶РёРЅРєРё)
 		View v = inflater.inflate(R.layout.fragment_about, null);
-		// Вызываем метод, который проверяет ориентацию экрана и ставит соответствующую фоновую картинку со снежинкой
+		// Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ, РєРѕС‚РѕСЂС‹Р№ РїСЂРѕРІРµСЂСЏРµС‚ РѕСЂРёРµРЅС‚Р°С†РёСЋ СЌРєСЂР°РЅР° Рё СЃС‚Р°РІРёС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰СѓСЋ С„РѕРЅРѕРІСѓСЋ РєР°СЂС‚РёРЅРєСѓ СЃРѕ СЃРЅРµР¶РёРЅРєРѕР№
 	    DOD.setBackgroundImage(this.getResources().getConfiguration().orientation, getClass().getSimpleName(), v);
-	    // Возвращаем вид с нужной фоновой картинкой
+	    // Р’РѕР·РІСЂР°С‰Р°РµРј РІРёРґ СЃ РЅСѓР¶РЅРѕР№ С„РѕРЅРѕРІРѕР№ РєР°СЂС‚РёРЅРєРѕР№
 		return v;
     }
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		// Делаем текст фрагмента прокручиваемым
+		// Р”РµР»Р°РµРј С‚РµРєСЃС‚ С„СЂР°РіРјРµРЅС‚Р° РїСЂРѕРєСЂСѓС‡РёРІР°РµРјС‹Рј
 		TextView tvAboutWurf = (TextView) getView().findViewById(R.id.textViewAbout);
 		tvAboutWurf.setMovementMethod(new ScrollingMovementMethod());
 		//tvAboutWurf.setMovementMethod(LinkMovementMethod.getInstance());
