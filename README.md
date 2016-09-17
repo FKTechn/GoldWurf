@@ -40,7 +40,7 @@ Version: 22.6.0.v201403010043-1049357
 * android-support-v4-preferencefragment
 * Androidplot 0.6.0
 
-Приложение работает на всех версиях Android, начиная с 2.3
+Приложение работает на всех версиях Android, начиная с 2.2
 
 [Онлайн-версия](http://result.zz.mu/wurf) «Золотого вурфа»
 
