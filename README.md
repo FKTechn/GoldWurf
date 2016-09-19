@@ -42,7 +42,7 @@ Version: 22.6.0.v201403010043-1049357
 
 Приложение работает на всех версиях Android, начиная с 2.3
 
-[Онлайн-версия «Золотого вурфа»] (http://result.zz.mu/wurf)
+[Онлайн-версия](http://result.zz.mu/wurf) «Золотого вурфа»
 
 ## Скриншоты
 <img src="http://result.zz.mu/wurf/github_images/10.jpg" width="45%"></img>
